@@ -14,25 +14,25 @@ body {
 }
 
 .container {
-    position: relative;
     width: 368px;
     height: 214px;
 }
 
-.screen {
-    position: absolute;
-    top: 0;
-    left: 0;
+#screen-container {
     width: 100%;
     height: 100%;
-    display: none;
 }
 
-.screen.active {
-    display: block;
+/* Стили для кликабельных кнопок */
+.button-on-off {
+    cursor: pointer;
+    transition: opacity 0.1s;
 }
 
-.svg-content {
-    width: 100%;
-    height: 100%;
+.button-on-off:hover {
+    opacity: 0.8;
+}
+
+.button-on-off:active {
+    opacity: 0.6;
 }
