@@ -5,21 +5,19 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #000000; /* Черный фон как в вашем дизайне */
+    background: #000000; /* Черный фон вокруг устройства */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* Убираем скролл */
+    overflow: hidden;
 }
 
 .container {
-    /* Увеличиваем размер в 2 раза */
-    width: 736px;  /* 368px * 2 */
-    height: 428px; /* 214px * 2 */
-    /* Убираем рамку */
-    border: none;
+    width: 736px;
+    height: 428px;
+    /* Без фона - SVG сам рисует фон */
+    background: transparent;
 }
 
 #screen-container {
@@ -33,16 +31,6 @@ body {
     display: block;
 }
 
-/* Стили для кликабельных кнопок */
 [id="Button On/Off"] {
     cursor: pointer;
-    transition: opacity 0.1s;
-}
-
-[id="Button On/Off"]:hover {
-    opacity: 0.8;
-}
-
-[id="Button On/Off"]:active {
-    opacity: 0.6;
 }
