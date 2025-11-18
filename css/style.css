@@ -11,11 +11,16 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    /* Увеличиваем масштаб всей страницы */
+    transform: scale(2);
+    transform-origin: center center;
 }
 
 .container {
     width: 368px;
     height: 214px;
+    /* Дополнительное увеличение контейнера */
+    transform: scale(1);
 }
 
 #screen-container {
@@ -24,15 +29,15 @@ body {
 }
 
 /* Стили для кликабельных кнопок */
-.button-on-off {
+[id="Button On/Off"] {
     cursor: pointer;
     transition: opacity 0.1s;
 }
 
-.button-on-off:hover {
+[id="Button On/Off"]:hover {
     opacity: 0.8;
 }
 
-.button-on-off:active {
+[id="Button On/Off"]:active {
     opacity: 0.6;
 }
