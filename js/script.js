@@ -1,43 +1,52 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let currentScreen = 1;
-    
-    // Функция для переключения экранов
-    function switchScreen() {
-        const screen1 = document.getElementById('screen1');
-        const screen2 = document.getElementById('screen2');
-        
-        if (currentScreen === 1) {
-            screen1.classList.remove('active');
-            screen2.classList.add('active');
-            currentScreen = 2;
-        } else {
-            screen2.classList.remove('active');
-            screen1.classList.add('active');
-            currentScreen = 1;
-        }
+let currentScreen = 1;
+const screenCache = new Map();
+
+const screens = {
+    1: 'images/screen1.svg',
+    2: 'images/screen2.svg'
+};
+
+async function loadScreen(screenNumber) {
+    if (screenCache.has(screenNumber)) {
+        return screenCache.get(screenNumber);
     }
     
-    // Обработчик для первого экрана
-    const screen1Object = document.querySelector('#screen1 object');
-    screen1Object.addEventListener('load', function() {
-        const svgDoc = screen1Object.contentDocument;
-        const buttonOnOff = svgDoc.getElementById('Button On/Off');
-        
-        if (buttonOnOff) {
-            buttonOnOff.style.cursor = 'pointer';
-            buttonOnOff.addEventListener('click', switchScreen);
-        }
-    });
+    try {
+        const response = await fetch(screens[screenNumber]);
+        const svgText = await response.text();
+        screenCache.set(screenNumber, svgText);
+        return svgText;
+    } catch (error) {
+        console.error('Ошибка загрузки:', error);
+        return null;
+    }
+}
+
+async function switchScreen() {
+    const nextScreen = currentScreen === 1 ? 2 : 1;
+    await showScreen(nextScreen);
+}
+
+async function showScreen(screenNumber) {
+    const container = document.getElementById('screen-container');
+    const svgContent = await loadScreen(screenNumber);
     
-    // Обработчик для второго экрана
-    const screen2Object = document.querySelector('#screen2 object');
-    screen2Object.addEventListener('load', function() {
-        const svgDoc = screen2Object.contentDocument;
-        const buttonOnOff = svgDoc.getElementById('Button On/Off');
-        
-        if (buttonOnOff) {
-            buttonOnOff.style.cursor = 'pointer';
-            buttonOnOff.addEventListener('click', switchScreen);
-        }
-    });
+    if (!svgContent) return;
+    
+    // Быстрая замена контента
+    container.innerHTML = svgContent;
+    currentScreen = screenNumber;
+    
+    // Назначаем обработчик на кнопку
+    const button = container.querySelector('[id="Button On/Off"]');
+    if (button) {
+        button.style.cursor = 'pointer';
+        button.addEventListener('click', switchScreen);
+    }
+}
+
+// Предзагружаем оба экрана при старте
+document.addEventListener('DOMContentLoaded', async () => {
+    await Promise.all([loadScreen(1), loadScreen(2)]);
+    await showScreen(1);
 });
