@@ -5,7 +5,7 @@
 }
 
 body {
-    background: #000000; /* Черный фон вокруг устройства */
+    background: #000000; /* Полностью черный фон */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,8 +16,8 @@ body {
 .container {
     width: 736px;
     height: 428px;
-    /* Без фона - SVG сам рисует фон */
-    background: transparent;
+    /* Добавляем тень как в оригинальном дизайне */
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 #screen-container {
@@ -31,6 +31,8 @@ body {
     display: block;
 }
 
+/* Стили для кликабельных кнопок */
 [id="Button On/Off"] {
     cursor: pointer;
+    transition: opacity 0.1s;
 }
